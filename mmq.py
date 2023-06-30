@@ -1,55 +1,59 @@
-x = []
-print("digite os valores de x ou 'Q' quando terminar: ", end = "")
-while True:
-    inp = input()
-    if inp == 'Q':
-        break
-    else:
-        x.append(float(inp))
+def mmqpy(x, y, yinc):
+    """Calcula a reta de tendencia pelo MMQ
+    
+    Parametros
+    ----------
+    x : List
+        Lista com os valores do eixo X
+    y : List
+        Lista com os valores do eixo Y
+    yinc : List
+        Lista com os valores da incerteza dos pontos no eixo Y
+    
+    Saída
+    -----
+    List
+        Lista seguindo o formato
+        [coeficiente angular,
+        incerteza do coeficiente angular,
+        coeficiente linear,
+        incerteza do coeficiente linear]
+    """
+    
+    count = len(x)
+    
+    inc2 = 0
+    for i in range(count):
+        inc2 += divsupersegura(1,(yinc[i]**2))
+    
+    _x = 0
+    for i in range(count):
+        _x += divsupersegura(x[i],(yinc[i]**2))
+    _x = _x / inc2
 
-count = len(x)
+    _x2 = 0
+    for i in range(count):
+        _x2 += divsupersegura((x[i]**2),(yinc[i]**2))
+    _x2 = _x2 / inc2
 
-y = []
-print("digite os valores de y: ", end = "")
-for i in range(count):
-    inp = input()
-    y.append(float(inp))
+    _y = 0
+    for i in range(count):
+        _y += divsupersegura((y[i]),(yinc[i]**2))
+    _y = _y / inc2
 
-yinc = []
-print("digite a incerteza de cada valor de y: ", end = "")
-for i in range(count):
-    inp = input()
-    yinc.append(float(inp))
+    xy = 0
+    for i in range(count):
+        xy += divsupersegura((x[i]*y[i]),(yinc[i]**2))
+    xy = xy / inc2
 
-inc2 = 0
-for i in range(count):
-    inc2 += 1/(yinc[i]**2)
+    a = divsupersegura(((_x * _y)- xy),((_x**2)-_x2))
+    b = _y - (a*_x)
 
-_x = 0
-for i in range(count):
-    _x += x[i]/(yinc[i]**2)
-_x = _x / inc2
+    inca = divsupersegura((1/inc2),(_x2 - _x**2))**0.5
+    incb = divsupersegura((_x2/inc2),(_x2 - _x**2))**0.5
 
-_x2 = 0
-for i in range(count):
-    _x2 += (x[i]**2)/(yinc[i]**2)
-_x2 = _x2 / inc2
+    return [a, inca, b, incb]
 
-_y = 0
-for i in range(count):
-    _y += (y[i])/(yinc[i]**2)
-_y = _y / inc2
-
-xy = 0
-for i in range(count):
-    xy += (x[i]*y[i])/(yinc[i]**2)
-xy = xy / inc2
-
-a = ((_x * _y)- xy)/((_x**2)-_x2)
-b = _y - (a*_x)
-
-inca = ((1/inc2)/(_x2 - _x**2))**0.5
-incb = ((_x2/inc2)/(_x2 - _x**2))**0.5
-
-print("o valor de a é: "+ str(a) + " +- " + str(inca))
-print("o valor de b é: " + str(b) + " +- " + str(incb))
+def divsupersegura(a, b):
+    """Divisão que retorna 0 se o denominador for 0"""
+    return a/b if b != 0 else 0
