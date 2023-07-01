@@ -102,5 +102,5 @@ else:
 
 resultado = mmqpy(x, y, yinc)
 
-print("o valor do coeficiente angular (a) é: "+ str(resultado[0]) + " +- " + str(resultado[1]))
-print("o valor do coeficiente linear (b) é: " + str(resultado[2]) + " +- " + str(resultado[3]))
+print("O valor do coeficiente angular (a) é: "+ str(resultado[0]) + " +- " + str(resultado[1]))
+print("O valor do coeficiente linear (b) é: " + str(resultado[2]) + " +- " + str(resultado[3]))
