@@ -86,19 +86,19 @@ else:
         if inp == 'Q':
             break
         else:
-            x.append(float(inp))
+            x.append(float(inp.replace(',','.')))
 
     count = len(x)
 
     print("digite os valores de y: ", end = "")
     for i in range(count):
         inp = input()
-        y.append(float(inp))
+        y.append(float(inp.replace(',','.')))
 
     print("digite a incerteza de cada valor de y: ", end = "")
     for i in range(count):
         inp = input()
-        yinc.append(float(inp))
+        yinc.append(float(inp.replace(',','.')))
 
 resultado = mmqpy(x, y, yinc)
 
