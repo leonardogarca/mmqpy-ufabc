@@ -2,8 +2,6 @@
 
 Script feito pra calcular a reta de regressão usando a fórmula que os relatórios dos laboratórios da ufabc pedem.
 
-Não é bonito, mas funciona.
-
 # Como usar
 
 Só rodar o mmq.py no terminal. Tem dois modos: ler os valores de um .csv, ou digitar cada valor individualmente.
